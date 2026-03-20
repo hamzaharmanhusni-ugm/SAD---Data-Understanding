@@ -1,6 +1,5 @@
-============================================================
-PROYEK DATA UNDERSTANDING ICU (CRISP-DM D1-D8)
-============================================================
+## PROYEK DATA UNDERSTANDING ICU (CRISP-DM D1-D8)
+
 
 Ringkasan:
 - Dataset: ICU Patient Monitoring Mortality Prediction (15.000 baris, 24 kolom)

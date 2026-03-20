@@ -1,0 +1,135 @@
+\documentclass[conference]{IEEEtran}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{cite}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{seqsplit}
+
+\title{Analisis Data Understanding ICU untuk Tugas SAD: Audit D1--D8 yang Reproducible dan Siap Riset}
+
+\author{\IEEEauthorblockN{Hamzah Arman Husni}
+\IEEEauthorblockA{Magister Kecerdasan Artifisial\\
+Universitas Gadjah Mada\\
+Yogyakarta, Indonesia}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Makalah ini menyajikan fase \textit{data understanding} yang diperdalam untuk tugas Sistem Analitik Data (SAD) pada data ICU \textit{Patient Monitoring and Mortality Prediction}. Analisis disusun mengikuti alur D1--D8 secara reproducible dari satu notebook utama dan menghasilkan artefak terverifikasi di folder \texttt{outputs/}, \texttt{figures/}, dan \texttt{docs/}. Dataset berisi 15.000 baris dan 24 kolom, tanpa nilai hilang maupun duplikasi baris. Prevalensi mortalitas sebesar 0.2279 menunjukkan ketidakseimbangan kelas moderat sehingga evaluasi dirancang dengan \textit{stratified split} dan metrik berorientasi kelas minoritas. Hasil fairness deskriptif menunjukkan variasi risiko antar kelompok, terutama pada \textit{age band} 81+ dengan \textit{relative risk} 1.1492 terhadap rata-rata populasi. Audit deliverable menghasilkan skor keterpenuhan 100.0/100.
+\end{abstract}
+
+\begin{IEEEkeywords}
+Data Understanding, ICU, CRISP-DM, Fairness Audit, Kualitas Data, Reproducibility
+\end{IEEEkeywords}
+
+\section{Pendahuluan}
+Penelitian AI di domain kesehatan berisiko tinggi terhadap bias data, kesalahan semantik fitur, dan kebocoran informasi. Oleh karena itu, fase \textit{data understanding} tidak hanya berfungsi sebagai EDA visual, tetapi juga sebagai fondasi validasi ilmiah sebelum pemodelan.
+
+Pada tugas SAD ini, tujuan utama penelitian adalah: (1) memahami karakteristik data ICU secara menyeluruh, (2) mendeteksi risiko kualitas, fairness, dan leakage sejak awal, serta (3) menyiapkan paket artefak yang dapat diverifikasi ulang. Fokus penelitian dibatasi pada \textit{data understanding}; pelatihan model prediktif tidak dibahas pada tahap ini.
+
+\section{Dataset dan Ruang Lingkup}
+Dataset bersumber dari Kaggle (\textit{uploader}: jayjoshi37) dengan nama file:
+
+\begin{flushleft}
+\small\ttfamily\seqsplit{ICU\_Patient\_Monitoring\_Mortality\_Prediction\_15000.csv}
+\end{flushleft}
+\noindent yang ditempatkan di direktori \texttt{dataset/}. Ringkasan data card ditunjukkan pada Tabel~\ref{tab:datacard}. Integritas versi dijaga melalui SHA-256:
+
+\begin{center}
+\small\texttt{\seqsplit{c3a11947b7c0db69}}
+\end{center}
+
+\begin{table}[ht]
+\centering
+\caption{Ringkasan Data Card ICU}
+\label{tab:datacard}
+\begin{tabular}{ll}
+\toprule
+Komponen & Nilai \\
+\midrule
+Jumlah baris & 15.000 \\
+Jumlah kolom & 24 \\
+Target & \texttt{mortality\_label} \\
+Missing total & 0 \\
+Duplicate rows & 0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Keterbatasan yang dicatat: data bersifat \textit{cross-sectional} (bukan \textit{event-level time series}), detail institusi sumber tidak dipublikasikan lengkap, dan fairness prediktif baru dapat diuji setelah model baseline tersedia.
+
+\section{Metodologi Data Understanding (D1--D8)}
+Alur analisis mengikuti delapan komponen deliverable tugas SAD, diimplementasikan dalam notebook \texttt{ICU\_Data\_Understanding\_AgenticAI.ipynb}.
+
+\subsection{D1 -- Data Card dan Schema}
+Tahap D1 mendokumentasikan provenance, struktur kolom, dan keterbatasan agar interpretasi tahap berikutnya tidak ambigu.
+
+\subsection{D2 -- Representativeness dan Bias Awal}
+Distribusi target dan subgroup diperiksa untuk mengidentifikasi potensi ketidakmerataan representasi. Hasil dipetakan per gender, \textit{admission type}, dan \textit{age band}.
+
+\subsection{D3 -- Advanced EDA}
+Analisis mencakup distribusi vital sign, korelasi antarfitur numerik, inspeksi missingness, dan indikasi outlier. Seluruh visual disimpan otomatis sebagai artefak reproducible.
+
+\subsection{D4 -- Semantic Validation dan Leakage Checklist}
+Dilakukan pemeriksaan field identifier, potensi leakage, dan checklist pitfall untuk memastikan kesiapan data sebelum pemodelan.
+
+\subsection{D5 -- Data Quality (ISO/IEC 25012 Inspired)}
+Enam dimensi kualitas inti dinilai (completeness, consistency, accuracy, validity, uniqueness, timeliness). Selain skor inti, notebook menambahkan indikator risiko operasional agar analisis tidak \textit{flat}.
+
+\subsection{D6 -- Evaluation Design Plan}
+Rencana evaluasi didokumentasikan sebagai tabel artefak (tanpa chart biner \texttt{Included=1}) berisi strategi split, stratifikasi, baseline, metrik utama, dan kontrol leakage.
+
+\subsection{D7 -- Fairness dan Ethical Audit (Deskriptif)}
+Audit fairness pada tahap ini bersifat deskriptif: membandingkan laju mortalitas antar kelompok, ukuran sampel, \textit{rate gap} terhadap rata-rata, dan \textit{relative risk}.
+
+\subsection{D8 -- Audit Deliverable}
+Keterpenuhan deliverable dinilai berdasarkan keberadaan artefak file. Semua komponen D1--D8 berstatus lengkap.
+
+\section{Hasil Kuantitatif Kunci}
+\subsection{Statistik Dasar dan Implikasi Evaluasi}
+Prevalensi mortalitas adalah 0.2279, sehingga baseline mayoritas menjadi 0.7721. Kondisi ini mengindikasikan bahwa akurasi tunggal tidak cukup; metrik seperti PR-AUC, Recall, F1, dan MCC diprioritaskan pada rancangan evaluasi.
+
+\subsection{Hasil Kualitas Data}
+Ringkasan dari \texttt{outputs/data\_quality\_report.csv}:
+\begin{itemize}
+	\item Completeness = 100.0
+	\item Consistency = 100.0
+	\item Accuracy(age) = 100.0
+	\item Accuracy(SpO2) = 100.0
+	\item Validity(binary target) = 100.0
+	\item Uniqueness = 100.0
+\end{itemize}
+Catatan timeliness: data bersifat \textit{cross-sectional} tanpa \textit{event-level timestamp}.
+
+\subsection{Hasil Fairness Deskriptif}
+Tabel~\ref{tab:fairness} merangkum subgroup dengan gap terbesar terhadap rata-rata mortalitas populasi.
+
+\begin{table}[ht]
+\centering
+\caption{Ringkasan Fairness Deskriptif}
+\label{tab:fairness}
+\begin{tabular}{lrrrr}
+\toprule
+Kelompok & n & Rate & Gap & RR \\
+\midrule
+Age 81+ & 2001 & 0.2619 & +0.0340 & 1.1492 \\
+Age 61--80 & 4166 & 0.2513 & +0.0235 & 1.1029 \\
+Male & 7523 & 0.2310 & +0.0032 & 1.0139 \\
+Female & 7477 & 0.2247 & -0.0032 & 0.9861 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Hasil tersebut menunjukkan sinyal perbedaan risiko mortalitas pada kelompok usia lanjut, yang relevan untuk perancangan evaluasi model berbasis subgroup pada tahap berikutnya.
+
+\subsection{Audit Deliverable Tugas SAD}
+Berdasarkan \texttt{outputs/deliverable\_audit.csv}, seluruh delapan deliverable berstatus lengkap dengan skor akhir 100.0/100.
+
+\section{Kesimpulan}
+Dokumen ini memperkuat fase \textit{data understanding} untuk kebutuhan riset tugas SAD secara lebih spesifik, kuantitatif, dan dapat direproduksi. Kontribusi utama bukan hanya visualisasi, tetapi audit menyeluruh D1--D8 yang mencakup kualitas data, fairness deskriptif, rencana evaluasi yang \textit{imbalance-aware}, serta validasi artefak hingga skor 100.0/100. Tahap lanjutan yang direkomendasikan adalah pemodelan baseline terstratifikasi dan evaluasi fairness prediktif berbasis metrik antar-subgroup.
+
+
+\end{document}

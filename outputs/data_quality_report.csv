@@ -1,0 +1,8 @@
+﻿dimension,score_or_note
+Completeness,100.0
+Consistency,100.0
+Accuracy(age),100.0
+Accuracy(SpO2),100.0
+Validity(binary target),100.0
+Uniqueness,100.0
+Timeliness,Cross-sectional tanpa timestamp event-level

@@ -1,0 +1,16 @@
+﻿No,Pitfall,Terdeteksi?,Ditangani?
+1,Target Leakage,Perlu verifikasi lanjutan,Belum
+2,Temporal Leakage,Perlu verifikasi lanjutan,Belum
+3,Pipeline Leakage,Perlu verifikasi lanjutan,Belum
+4,Feature Selection Leakage,Perlu verifikasi lanjutan,Belum
+5,Augmentation Leakage,Perlu verifikasi lanjutan,Belum
+6,Duplicate Data,Perlu verifikasi lanjutan,Belum
+7,Class Imbalance -> Accuracy Illusion,Ya,Parsial
+8,High Dimensionality (p >> n),Perlu verifikasi lanjutan,Belum
+9,Wrong Split Strategy,Perlu verifikasi lanjutan,Belum
+10,Sequential Overfitting,Perlu verifikasi lanjutan,Belum
+11,Wrong Metric Selection,Ya,Parsial
+12,Proxy Bias,Ya,Belum
+13,Multiple Comparison Risk,Perlu verifikasi lanjutan,Belum
+14,MNAR tanpa model eksplisit,Perlu verifikasi lanjutan,Belum
+15,Missing Provenance,Perlu verifikasi lanjutan,Belum

@@ -1,0 +1,9 @@
+﻿No,Deliverable,Bobot,Status,Files
+1,"Data Card (provenance, schema, limitations)",15%,Lengkap,"outputs/Data_Card_ICU.md, figures/du_step01_d1_schema_cardinality.png"
+2,Representativeness & Bias Audit Report,15%,Lengkap,"figures/du_step02_d2_representativeness_counts.png, figures/du_step03_d2_bias_audit.png"
+3,Advanced EDA Report,20%,Lengkap,"figures/du_step04_d3_vital_distributions.png, figures/du_step05_d3_missing_heatmap.png, figures/du_step06_d3_correlation.png"
+4,Semantic Validation & Leakage Checklist,15%,Lengkap,"outputs/pitfall_checklist.csv, figures/du_step07_d4_pitfall_status.png"
+5,Data Quality Report (ISO/IEC 25012),10%,Lengkap,"outputs/data_quality_report.csv, figures/du_step08_d5_quality_scores.png"
+6,Evaluation Design Plan,10%,Lengkap,outputs/evaluation_plan.csv
+7,Fairness & Ethical Audit Report,10%,Lengkap,outputs/fairness_descriptive_summary.csv
+8,Bagian Data Understanding Jurnal (IEEE .tex),5%,Lengkap,docs/ieee_data_understanding_paper_v2.tex
